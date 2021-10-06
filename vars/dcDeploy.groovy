@@ -25,6 +25,7 @@ def call(Map input) {
 }
 
 def call(ServiceUpdateInput input) {
+    echo "Service Name: ${input.tenant}"
     assert input.tenant  : "Param 'tenant' should be defined."
     assert input.token  : "Param 'token' should be defined."
     assert input.duploUrl  : "Param 'duploUrl' should be defined."
