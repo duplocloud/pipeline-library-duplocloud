@@ -1,4 +1,5 @@
 package com.duplocloud.library;
+
 import groovy.json.*
 
 def post(String url, String token, Object body){
