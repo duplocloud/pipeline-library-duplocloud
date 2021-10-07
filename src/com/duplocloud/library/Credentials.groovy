@@ -3,6 +3,7 @@ import jenkins.model.*
 import hudson.*
 import hudson.model.*
 import groovy.json.*
+
 def jenkinsCredentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
         com.cloudbees.plugins.credentials.Credentials.class,
         Jenkins.instance,
@@ -10,12 +11,11 @@ def jenkinsCredentials = com.cloudbees.plugins.credentials.CredentialsProvider.l
         null
 );
 
-def getCredential(id){
-    for (creds in jenkinsCredentials) {
+for (creds in jenkinsCredentials) {
         println new JsonBuilder( creds ).toPrettyString() 
         if(creds.id == id){
             return creds
         }
     }
-}
+
 return this;
