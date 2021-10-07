@@ -6,8 +6,9 @@ def post(String url, String token, Object body){
   def apiUrl = new URL(url)
   echo "Making a request at: ${apiUrl}"
   def res;
+  def HttpURLConnection connection;
   try {
-    def HttpURLConnection connection = apiUrl.openConnection()
+    connection = apiUrl.openConnection()
     connection.setRequestProperty("Authorization", "Bearer ${token}")
     connection.setRequestMethod("POST")
     connection.setDoOutput(true)
@@ -39,7 +40,7 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     echo "Error while calling API: ${new JsonBuilder( err).toPrettyString()}, Response: ${res}"
+     echo "Error while calling API: ${connection.getErrorStream().text}, Response: ${res}"
      thow new Exception("Error while calling API", err)
   }
 }
