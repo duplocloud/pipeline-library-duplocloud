@@ -50,7 +50,7 @@ def call(ServiceUpdateInput input) {
     assert input.service.name : "Param 'service.name' should be defined."
     assert input.service.image : "Param 'service.image' should be defined."
 
-    def flow = new com.duplocloud.RestClient()
+    def flow = new com.duplocloud.library.RestClient()
 
     def body =input.service.toBody();
 
