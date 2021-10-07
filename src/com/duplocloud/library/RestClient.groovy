@@ -26,9 +26,8 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     echo "${err}"
-     echo "Error while calling API"
-     error= connection.getErrorStream().text;
+     err.printStackTrace();
+     error= connection.getErrorStream()?.text;
      echo "HTTP Status:  ${connection.responseCode}"
      echo "Error:  ${error}"
      throw new Exception(error);
