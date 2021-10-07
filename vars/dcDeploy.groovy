@@ -12,18 +12,19 @@ class ReplicationController implements Serializable {
    String allocationTags;
    Boolean daemonset  = false;
 
-   toBody(){
+   def toBody(){
        return ''' 
         {
-            "image": "${name}", \
+            "image": "${name}", 
             "Replicas": "${replicas}", 
-            "Name": "${name}"}
+            "Name": "${name}"},
             "ReplicaCollocationAllowed": "${replicaCollocationAllowed}",
             "LBSyncedDeployment": "${lBSyncedDeployment}",
             "ReplicasMatchingAsgName": "${asgName}",
             "AgentPlatform": "${agentPlatform}",
             "AllocationTags": "${allocationTags}",
             "Daemonset": "${daemonset}"
+        }
        '''
    }
 
