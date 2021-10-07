@@ -12,9 +12,7 @@ def post(String url, String token, Object body){
     connection.setRequestMethod("POST")
     connection.setDoOutput(true)
     connection.connect()
-    if(body.class !=  String)
-      body =  new JsonBuilder( body).toPrettyString()
-
+  
     echo "Request body: ${body}\n"
 
     OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())
