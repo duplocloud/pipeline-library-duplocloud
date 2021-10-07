@@ -42,7 +42,7 @@ def call(Map input) {
 }
 
 def call(ServiceUpdateInput input) {
-    echo "Service Name: ${input.tenant}"
+    echo "Tenant Name: ${input.tenant}"
     assert input.tenant  : "Param 'tenant' should be defined."
     assert input.token  : "Param 'token' should be defined."
     assert input.duploUrl  : "Param 'duploUrl' should be defined."
@@ -56,7 +56,9 @@ def call(ServiceUpdateInput input) {
 
     res = flow.post(input.duploUrl + "subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
 
-    echo "Service Name: ${res}"
+    assert res : "Error while calling Duplo Portal API"
+
+     echo "Duplo API Response: ${res}"
 
     return res
 }
