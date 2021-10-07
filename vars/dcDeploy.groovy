@@ -52,7 +52,7 @@ def call(ServiceUpdateInput input) {
     def sTenants = flow.get("${input.duploUrl}/adminproxy/GetTenantNames");
     def jsonSlurper = new JsonSlurper()
     def tenants = jsonSlurper.parseText(sTenants);
-    def tenant = tenants.find(tenant => tenant.AccountName == input.tenant);
+    def tenant = tenants.find(tenant -> t.AccountName == input.tenant);
     echo "Found tenant: ${tenant}"
 
 
