@@ -31,6 +31,7 @@ class ServiceUpdateInput implements Serializable   {
     String token;
     String duploToken;
     String duploUrl;
+    String tokenId;
     ReplicationController service;
 }
 
@@ -53,7 +54,7 @@ def call(ServiceUpdateInput input) {
     def flow = new com.duplocloud.library.RestClient()
     def credsProvider = new com.duplocloud.library.Credentials();
     if(!duploToken){
-          def secretId = input.duploTokenSecret || "duplo-token"
+          def secretId = input.tokenId || "duplo-token"
           def token = credsProvider.getCredential(secretId)
           assert token: "Duplo token Secret not found witj id ${secretId}";
 
