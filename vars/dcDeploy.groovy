@@ -7,10 +7,25 @@ class ReplicationController implements Serializable {
    int replicas; 
    Boolean replicaCollocationAllowed = false;
    Boolean lBSyncedDeployment = false;
-  String asgName; 
-  int agentPlatform = 0;
-  String allocationTags;
-  Boolean daemonset  = false;
+   String asgName; 
+   int agentPlatform = 0;
+   String allocationTags;
+   Boolean daemonset  = false;
+
+   toBody(){
+       return ''' 
+        {
+            "image": "${name}", \
+            "Replicas": "${replicas}", 
+            "Name": "${name}"}
+            "ReplicaCollocationAllowed": "${replicaCollocationAllowed}",
+            "LBSyncedDeployment": "${lBSyncedDeployment}",
+            "ReplicasMatchingAsgName": "${asgName}",
+            "AgentPlatform": "${agentPlatform}",
+            "AllocationTags": "${allocationTags}",
+            "Daemonset": "${daemonset}"
+       '''
+   }
 
 }
 
@@ -36,7 +51,9 @@ def call(ServiceUpdateInput input) {
 
     def flow = com.duplocloud.library.DuploClient();
 
-    res = flow.post(input.duploUrl, input.token, input.service);
+    def body =input.service.toBody();
+
+    res = flow.post(input.duploUrl + "subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
 
     return res
 }
