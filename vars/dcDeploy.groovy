@@ -56,5 +56,7 @@ def call(ServiceUpdateInput input) {
 
     res = flow.post(input.duploUrl + "subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
 
+    echo "Service Name: ${res}"
+
     return res
 }
