@@ -54,11 +54,11 @@ def call(ServiceUpdateInput input) {
 
     def body =input.service.toBody();
 
-    res = flow.post(input.duploUrl + "subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
+    res = flow.post(input.duploUrl + "/subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
 
     assert res : "Error while calling Duplo Portal API"
 
-     echo "Duplo API Response: ${res}"
+    echo "Duplo API Response: ${res}"
 
     return res
 }
