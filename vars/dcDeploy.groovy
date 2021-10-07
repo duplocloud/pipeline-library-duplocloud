@@ -53,6 +53,7 @@ def call(ServiceUpdateInput input) {
     def jsonSlurper = new JsonSlurper()
     def tenants = jsonSlurper.parseText(sTenants);
     def tenant = tenants.find { t -> t.AccountName == input.tenant } ;
+    assert tenant: "No tenant with name ${input.tenant}"
     echo "Found tenant: ${tenant}"
 
 
