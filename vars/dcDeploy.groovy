@@ -13,7 +13,7 @@ class ReplicationController implements Serializable {
    Boolean daemonset  = false;
 
    def toBody(){
-       return ''' 
+       return """
         {
             "image": "${name}", 
             "Replicas": "${replicas}", 
@@ -25,7 +25,7 @@ class ReplicationController implements Serializable {
             "AllocationTags": "${allocationTags}",
             "Daemonset": "${daemonset}"
         }
-       '''
+       """
    }
 
 }
