@@ -25,11 +25,13 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     err.printStackTrace();
      error= connection.getErrorStream()?.text;
-     echo "HTTP Status:  ${connection.responseCode}"
-     echo "Error:  ${error}"
-     throw new Exception("Error:${error}", err);
+     def error = "";
+     if(connection){
+        echo "HTTP Status:  ${connection?.responseCode}"
+        echo "Error:  ${error}"
+     }
+     throw new Exception(error || "Error while calling API", err);
   }
 }
 
