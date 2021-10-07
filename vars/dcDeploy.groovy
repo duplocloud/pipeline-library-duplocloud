@@ -59,7 +59,7 @@ def call(ServiceUpdateInput input) {
           assert token: "Duplo token Secret not found witj id ${secretId}";
 
           def jsonSlurper = new JsonSlurper()
-          def tokenSecret = jsonSlurper.parseText(token.getSecret());
+          def tokenSecret = jsonSlurper.parseText(token.getSecret().getPlainText());
           duploToken = tokenSecret["token"]
           duploUrl = tokenSecret["url"]
     }
