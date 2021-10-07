@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 import com.duplocloud.library.*;
+import groovy.json.*
 
 class ReplicationController implements Serializable {                   
    String name; 
@@ -37,7 +38,6 @@ def call(Map input) {
 }
 
 def call(ServiceUpdateInput input) {
-    echo "Tenant Name: ${input.tenant}"
     assert input.tenant  : "Param 'tenant' should be defined."
     assert input.token  : "Param 'token' should be defined."
     assert input.duploUrl  : "Param 'duploUrl' should be defined."
@@ -49,7 +49,14 @@ def call(ServiceUpdateInput input) {
 
     def body =input.service.toBody();
 
-    res = flow.post(input.duploUrl + "/subscriptions/${input.tenant}/ReplicationControllerChange", input.token, body);
+    def sTenants = flow.get("${input.duploUrl}/adminproxy/GetTenantNames");
+    def jsonSlurper = new JsonSlurper()
+    def tenants[] = jsonSlurper.parseText(sTenants);
+    def tenant = tenants.find(tenant => tenant.AccountName == input.tenant);
+    echo "Found tenant: ${tenant}"
+
+
+    def res = flow.post(input.duploUrl + "/subscriptions/${tenant}/ReplicationControllerChange", input.token, body);
 
     assert res : "Error while calling Duplo Portal API"
 

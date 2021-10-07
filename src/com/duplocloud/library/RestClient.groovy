@@ -21,7 +21,7 @@ def post(String url, String token, Object body){
     res = stream?.text;
     connection.disconnect()
     echo "HTTP Status: ${connection.responseCode}"
-    echo "Recieved Resonse:  ${r1es}"
+    echo "Recieved Resonse:  ${res}"
     return res
 
   } catch (err) {
@@ -35,5 +35,38 @@ def post(String url, String token, Object body){
   }
 }
 
+
+def get(String url, String token){
+  def apiUrl = new URL(url)
+  echo "Making a request at: ${apiUrl}"
+  def res = null;
+  def HttpURLConnection connection;
+  try {
+    connection = apiUrl.openConnection()
+    connection.setRequestProperty("Authorization", "Bearer ${token}")
+    connection.setRequestMethod("GET")
+    connection.setDoOutput(true)
+    connection.connect()
+    echo "Request body: ${body}\n"
+    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())
+    writer.write(body);
+    writer.flush();
+    stream = new InputStreamReader(connection.getInputStream(),"UTF-8");
+    res = stream?.text;
+    connection.disconnect()
+    echo "HTTP Status: ${connection.responseCode}"
+    echo "Recieved Resonse:  ${res}"
+    return res
+
+  } catch (err) {
+     error= connection.getErrorStream()?.text;
+     def error = "";
+     if(connection){
+        echo "HTTP Status:  ${connection?.responseCode}"
+        echo "Error:  ${error}"
+     }
+     throw new Exception(error || "Error while calling API", err);
+  }
+}
 
 return this;
