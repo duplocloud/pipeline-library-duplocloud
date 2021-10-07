@@ -15,15 +15,10 @@ class ReplicationController implements Serializable {
    def toBody(){
        return """
         {
-            "image": "${name}", 
+            "Image": "${name}", 
             "Replicas": "${replicas}", 
             "Name": "${name}",
-            "ReplicaCollocationAllowed": "${replicaCollocationAllowed}",
-            "LBSyncedDeployment": "${lBSyncedDeployment}",
-            "ReplicasMatchingAsgName": "${asgName}",
-            "AgentPlatform": "${agentPlatform}",
-            "AllocationTags": "${allocationTags}",
-            "Daemonset": "${daemonset}"
+           
         }
        """
    }
