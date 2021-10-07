@@ -20,8 +20,15 @@ def post(String url, String token, Object body){
     writer.write(body);
     writer.flush();
 
+    echo "1"
+
+    stream = new InputStreamReader(connection.getInputStream(),"UTF-8")
+    echo "2"
+
     // execute the POST request
-    def rs = new JsonSlurper().parse(new InputStreamReader(connection.getInputStream(),"UTF-8"))
+    def rs = new JsonSlurper().parse(new InputStreamReader(stream,"UTF-8"))
+
+    echo "3. rs"
 
     responseCode 
 
