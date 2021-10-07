@@ -17,7 +17,7 @@ class ReplicationController implements Serializable {
         {
             "image": "${name}", 
             "Replicas": "${replicas}", 
-            "Name": "${name}"},
+            "Name": "${name}",
             "ReplicaCollocationAllowed": "${replicaCollocationAllowed}",
             "LBSyncedDeployment": "${lBSyncedDeployment}",
             "ReplicasMatchingAsgName": "${asgName}",
