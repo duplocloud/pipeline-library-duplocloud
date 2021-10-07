@@ -5,6 +5,7 @@ import groovy.json.*
 def post(String url, String token, Object body){
   def apiUrl = new URL(url)
   echo "Making a request at: ${apiUrl}"
+  def res;
   try {
     def HttpURLConnection connection = apiUrl.openConnection()
     connection.setRequestProperty("Authorization", "Bearer ${token}")
@@ -23,10 +24,11 @@ def post(String url, String token, Object body){
     echo "1"
 
     stream = new InputStreamReader(connection.getInputStream(),"UTF-8")
+    res = stream.text;
     echo "2"
 
     // execute the POST request
-    def rs = new JsonSlurper().parse(new InputStreamReader(stream,"UTF-8"))
+    def rs = new JsonSlurper().parse(res)
 
     echo "3. rs"
 
@@ -38,8 +40,8 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     echo "ERROR  ${err}"
-     return
+     echo "Error while calling API: ${error}, Response: ${res}"
+     thow new Exception("Error while calling API", err)
   }
 }
 
