@@ -46,11 +46,7 @@ def get(String url, String token){
     connection.setRequestProperty("Authorization", "Bearer ${token}")
     connection.setRequestMethod("GET")
     connection.setDoOutput(true)
-    connection.connect()
-    echo "Request body: ${body}\n"
-    OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())
-    writer.write(body);
-    writer.flush();
+    connection.connect();
     stream = new InputStreamReader(connection.getInputStream(),"UTF-8");
     res = stream?.text;
     connection.disconnect()
