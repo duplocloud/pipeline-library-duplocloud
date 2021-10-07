@@ -21,13 +21,12 @@ def post(String url, String token, Object body){
     writer.write(body);
     writer.flush();
 
-    assert postConnection.responseCode == 200
+    //assert connection.responseCode == 200
 
 
     // execute the POST request
     def rs = new JsonSlurper().parse(new InputStreamReader(connection.getInputStream(),"UTF-8"))
-
-    responseCode 
+ 
 
     connection.disconnect()
    
