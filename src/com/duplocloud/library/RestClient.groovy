@@ -23,7 +23,8 @@ def post(String url, String token, Object body){
 
     echo "1"
 
-    stream = new InputStreamReader(connection.getInputStream(),"UTF-8")
+    stream = new InputStreamReader(connection.getInputStream(),"UTF-8");
+    echo "1.1";
     res = stream.text;
     echo "2"
 
@@ -40,7 +41,7 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     echo "Error while calling API: ${err}, Response: ${res}"
+     echo "Error while calling API: ${new JsonBuilder( err).toPrettyString()}, Response: ${res}"
      thow new Exception("Error while calling API", err)
   }
 }
