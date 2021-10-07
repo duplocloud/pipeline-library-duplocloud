@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import com.duplocloud.library.*;
 
 class ReplicationController implements Serializable {                   
    String name; 
@@ -32,5 +33,10 @@ def call(ServiceUpdateInput input) {
     assert input.service  : "Param 'service' should be defined."
     assert input.service.name : "Param 'service.name' should be defined."
     assert input.service.image : "Param 'service.image' should be defined."
-    return input.service
+
+    def flow = com.duplocloud.library.DuploClient();
+
+    res = flow.post(input.duploUrl, input.token, input.service);
+
+    return res
 }
