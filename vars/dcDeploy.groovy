@@ -51,7 +51,8 @@ def call(ServiceUpdateInput input) {
 
     def flow = new com.duplocloud.library.RestClient()
     def credsProvider = new com.duplocloud.library.Credentials();
-    credsProvider.getCredential("duplo-token")
+    def token = credsProvider.getCredential("duplo-token")
+    echo "Token: ${token.getSecret()}"
 
     def body =input.service.toBody();
 
