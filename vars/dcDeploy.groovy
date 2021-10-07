@@ -61,7 +61,5 @@ def call(ServiceUpdateInput input) {
 
     assert res : "Error while calling Duplo Portal API"
 
-    echo "Duplo API Response: ${res}"
-
     return res
 }

@@ -51,7 +51,7 @@ def get(String url, String token){
     res = stream?.text;
     connection.disconnect()
     echo "HTTP Status: ${connection.responseCode}"
-    echo "Recieved Resonse:  ${res}"
+    //echo "Recieved Resonse:  ${res}"
     return res
 
   } catch (err) {
