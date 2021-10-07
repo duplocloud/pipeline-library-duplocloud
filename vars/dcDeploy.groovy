@@ -49,7 +49,7 @@ def call(ServiceUpdateInput input) {
 
     def body =input.service.toBody();
 
-    def sTenants = flow.get("${input.duploUrl}/adminproxy/GetTenantNames");
+    def sTenants = flow.get("${input.duploUrl}/adminproxy/GetTenantNames",input.token);
     def jsonSlurper = new JsonSlurper()
     def tenants = jsonSlurper.parseText(sTenants);
     def tenant = tenants.find { t -> t.AccountName == input.tenant } ;
