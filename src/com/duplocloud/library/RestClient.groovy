@@ -40,7 +40,7 @@ def post(String url, String token, Object body){
     return res
 
   } catch (err) {
-     echo "Error while calling API: ${error}, Response: ${res}"
+     echo "Error while calling API: ${err}, Response: ${res}"
      thow new Exception("Error while calling API", err)
   }
 }
