@@ -29,6 +29,7 @@ class ReplicationController implements Serializable {
 class ServiceUpdateInput implements Serializable   {
     String tenant;
     String token;
+    String duploToken;
     String duploUrl;
     ReplicationController service;
 }
@@ -39,8 +40,6 @@ def call(Map input) {
 
 def call(ServiceUpdateInput input) {
     assert input.tenant  : "Param 'tenant' should be defined."
-    assert input.token  : "Param 'token' should be defined."
-    assert input.duploUrl  : "Param 'duploUrl' should be defined."
     assert input.service  : "Param 'service' should be defined."
     assert input.service.name : "Param 'service.name' should be defined."
     assert input.service.image : "Param 'service.image' should be defined."
@@ -48,15 +47,28 @@ def call(ServiceUpdateInput input) {
 
     creds = credentials('duplo-token')
     
+    def duploToken = input.token;
+    def duploURL = input.duploUrl;
 
     def flow = new com.duplocloud.library.RestClient()
     def credsProvider = new com.duplocloud.library.Credentials();
-    def token = credsProvider.getCredential("duplo-token")
-    echo "Token: ${token.getSecret()}"
+    if(!duploToken){
+          def secretId = input.duploTokenSecret || "duplo-token"
+          def token = credsProvider.getCredential(secretId)
+          assert token: "Duplo token Secret not found witj id ${secretId}";
+
+          def jsonSlurper = new JsonSlurper()
+          def tokenSecret = jsonSlurper.parseText(token.getSecret());
+          duploToken = tokenSecret["token"]
+          duploUrl = tokenSecret["url"]
+    }
+    assert duploToken: "Duplo token not found in secret and even not passed by the caller"
+    assert duploUrl: "Duplo url not found in secret and even not passed by the caller"
 
     def body =input.service.toBody();
 
-    def sTenants = flow.get("${input.duploUrl}/adminproxy/GetTenantNames",input.token);
+    //Fecthing tenant id from the tenant name
+    def sTenants = flow.get("${duploUrl}/adminproxy/GetTenantNames", duploToken);
     def jsonSlurper = new JsonSlurper()
     def tenants = jsonSlurper.parseText(sTenants);
     def tenant = tenants.find { t -> t.AccountName == input.tenant } ;
@@ -64,9 +76,8 @@ def call(ServiceUpdateInput input) {
     echo "Found tenant: ${tenant}"
 
 
-    def res = flow.post(input.duploUrl + "/subscriptions/${tenant.TenantId}/ReplicationControllerChange", input.token, body);
-
+    //Updating service
+    def res = flow.post(duploUrl + "/subscriptions/${tenant.TenantId}/ReplicationControllerChange", duploToken, body);
     assert res : "Error while calling Duplo Portal API"
-
     return res
 }
