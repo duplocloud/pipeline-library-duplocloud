@@ -57,7 +57,7 @@ def call(ServiceUpdateInput input) {
     echo "Found tenant: ${tenant}"
 
 
-    def res = flow.post(input.duploUrl + "/subscriptions/${tenant}/ReplicationControllerChange", input.token, body);
+    def res = flow.post(input.duploUrl + "/subscriptions/${tenant.AccountName}/ReplicationControllerChange", input.token, body);
 
     assert res : "Error while calling Duplo Portal API"
 
