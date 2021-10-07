@@ -18,8 +18,7 @@ def post(String url, String token, Object body){
     writer.write(body);
     writer.flush();
     stream = new InputStreamReader(connection.getInputStream(),"UTF-8");
-    if(stream != null)
-      res = stream.text;
+    res = stream?.text;
     connection.disconnect()
     echo "HTTP Status: ${connection.responseCode}"
     echo "Recieved Resonse:  ${r1es}"
@@ -30,7 +29,7 @@ def post(String url, String token, Object body){
      error= connection.getErrorStream()?.text;
      echo "HTTP Status:  ${connection.responseCode}"
      echo "Error:  ${error}"
-     throw new Exception(error);
+     throw new Exception("Error:${error}", err);
   }
 }
 
