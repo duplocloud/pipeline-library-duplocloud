@@ -37,3 +37,6 @@ def post(String url, String token, Object body){
      return
   }
 }
+
+
+return this;
