@@ -30,7 +30,7 @@ def post(String url, String token, Object body){
      echo "Error while calling API"
      error= connection.getErrorStream().text;
      echo "HTTP Status:  ${connection.responseCode}"
-     echo "Error:  ${error}"
+     System.err.println "Error:  ${error}"
      throw new Exception(error);
   }
 }
