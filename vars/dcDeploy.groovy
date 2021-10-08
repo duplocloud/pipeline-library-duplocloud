@@ -3,7 +3,7 @@
 class ReplicationController implements Serializable {                   
    String name; 
    String image;
-   int replicas; 
+   Integer replicas; 
    Boolean replicaCollocationAllowed = false;
    Boolean lBSyncedDeployment = false;
   String asgName; 
