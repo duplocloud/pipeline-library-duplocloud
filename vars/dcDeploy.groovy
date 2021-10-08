@@ -16,8 +16,7 @@ class ReplicationController implements Serializable {
    def toBody(){
        return """
         {
-            "Image": "${image}", 
-            "Replicas": "${replicas}", 
+            "Image": "${image}",
             "Name": "${name}",
            
         }
