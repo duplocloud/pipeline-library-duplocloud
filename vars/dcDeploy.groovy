@@ -18,7 +18,8 @@ class ReplicationController implements Serializable {
         {
             "Image": "${image}",
             "Name": "${name}",
-            "AgentPlatform" : "${agentPlatform}"
+            "AgentPlatform" : "${agentPlatform}",
+            "AllocationTags" : "${allocationTags}"
            
         }
        """
