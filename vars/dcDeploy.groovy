@@ -57,7 +57,7 @@ def call(ServiceUpdateInput input) {
     if(!duploToken){
           def secretId = input.tokenId || "duplo-token"
           def token = credsProvider.getCredential(secretId)
-          assert token: "Duplo token Secret not found witj id ${secretId}";
+          assert token: "Duplo token Secret not found with id ${secretId}";
 
           def jsonSlurper = new JsonSlurper()
           def tokenSecret = jsonSlurper.parseText(token.getSecret().getPlainText());

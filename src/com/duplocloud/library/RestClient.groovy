@@ -2,7 +2,7 @@ package com.duplocloud.library;
 
 import groovy.json.*
 
-def post(String url, String token, Object body){
+def post(String url, String token, Object body) {
   def apiUrl = new URL(url)
   echo "Making a request at: ${apiUrl}"
   def res = null;
@@ -35,8 +35,7 @@ def post(String url, String token, Object body){
   }
 }
 
-
-def get(String url, String token){
+def get(String url, String token) {
   def apiUrl = new URL(url)
   echo "Making a request at: ${apiUrl}"
   def res = null;
