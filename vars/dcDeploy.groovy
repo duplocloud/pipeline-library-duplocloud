@@ -69,16 +69,15 @@ def call(ServiceUpdateInput input) {
 
     def body =input.service.toBody();
 
-    //Fecthing tenant id from the tenant name
-    def sTenants = flow.get("${duploUrl}/adminproxy/GetTenantNames", duploToken);
+    // Fecthing tenant id from the tenant name
+    def sTenants = flow.get("${duploUrl}/admin/GetTenantsForUser", duploToken);
     def jsonSlurper = new JsonSlurper()
     def tenants = jsonSlurper.parseText(sTenants);
     def tenant = tenants.find { t -> t.AccountName == input.tenant } ;
     assert tenant: "No tenant with name ${input.tenant}"
     echo "Found tenant: ${tenant}"
 
-
-    //Updating service
+    // Updating service
     def res = flow.post(duploUrl + "/subscriptions/${tenant.TenantId}/ReplicationControllerChange", duploToken, body);
     assert res : "Error while calling Duplo Portal API"
     return res
