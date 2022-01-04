@@ -30,14 +30,14 @@ class Client {
     }
   }
 
-  private _get(String path) {
-    this.restClient.get("${this.baseUrl}${path}", this.token);
+  private doGet(String path) {
+    def response = this.restClient.get("${this.baseUrl}${path}", this.token);
     def jsonSlurper = new JsonSlurper()
-    return jsonSlurper.parseText(sTenants);
+    return jsonSlurper.parseText(response);
   }
 
   public listTenants() {
-    return this._get("adminproxy/GetTenantsForUser")
+    return this.doGet("adminproxy/GetTenantsForUser")
   }
 
   public getTenant(String id) {
