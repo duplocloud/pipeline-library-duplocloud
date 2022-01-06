@@ -44,7 +44,7 @@ class Client {
   }
 
   public listTenants() {
-    return this.doGet("adminproxy/GetTenantsForUser")
+    return this.doGet("admin/GetTenantsForUser")
   }
 
   public getTenant(String id) {
