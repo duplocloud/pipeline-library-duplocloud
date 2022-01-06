@@ -8,26 +8,38 @@ class Client {
   def token
   def restClient
 
-  Client(String credentialsId = "duplo-token") {
-    this.restClient = new com.duplocloud.library.RestClient();
-
-    // Find the credentials.
-    def credsProvider = new com.duplocloud.library.Credentials();
-    def token = credsProvider.getCredential(credentialsId)
-    assert token: "Duplo token Secret not found with id ${credentialsId}";
-
-    // Parse the credentials.
-    def jsonSlurper = new JsonSlurper()
-    def tokenSecret = jsonSlurper.parseText(token.getSecret().getPlainText());
-    this.token = tokenSecret["token"]
-    this.baseUrl = tokenSecret["url"]
-    assert this.token: "Credentials ${credentialsId}: token: missing JSON key"
-    assert this.baseUrl: "Credentials ${credentialsId}: url: missing JSON key"
+  Client(String baseUrl, String token) {
+    this.restClient = new com.duplocloud.library.RestClient()
+    this.baseUrl = baseUrl
+    this.token = token
 
     // Ensure we have an ending slash.
     if (! this.baseUrl.endsWith("/")) {
       this.baseUrl = "${this.baseUrl}/"
     }
+  }
+
+  public static Client getInstance(String credentialsId = "duplo-token") {
+
+    // Find the credentials.
+    def credsProvider = new com.duplocloud.library.Credentials();
+    def creds = credsProvider.getCredential(credentialsId)
+    assert creds: "Duplo credentials not found with id ${credentialsId}";
+
+    // Parse the credentials.
+    def jsonSlurper = new JsonSlurper()
+    def credsJson = jsonSlurper.parseText(creds.getSecret().getPlainText());
+    def token = credsJson["token"]
+    def baseUrl = credsJson["url"]
+    assert token: "Credentials ${credentialsId}: token: missing JSON key"
+    assert baseUrl: "Credentials ${credentialsId}: url: missing JSON key"
+
+    // Ensure we have an ending slash.
+    if (! baseUrl.endsWith("/")) {
+      baseUrl = "${this.baseUrl}/"
+    }
+
+    return new Client(baseUrl, token)
   }
 
   private doGet(String path) {
