@@ -34,11 +34,6 @@ class Client {
     assert token: "Credentials ${credentialsId}: token: missing JSON key"
     assert baseUrl: "Credentials ${credentialsId}: url: missing JSON key"
 
-    // Ensure we have an ending slash.
-    if (! baseUrl.endsWith("/")) {
-      baseUrl = "${this.baseUrl}/"
-    }
-
     return new Client(baseUrl, token)
   }
 
