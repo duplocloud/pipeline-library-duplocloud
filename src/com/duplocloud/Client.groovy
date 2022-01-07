@@ -26,6 +26,10 @@ class Client {
     assert creds: "Duplo credentials not found with id ${credentialsId}"
 
     // Parse the credentials.
+    //
+    // NOTE: To make sure the result is serializable, we convert it to a hash map
+    // - https://stackoverflow.com/questions/37864542/jenkins-pipeline-notserializableexception-groovy-json-internal-lazymap
+    //
     def jsonSlurper = new JsonSlurper()
     def credsJson = new HashMap(jsonSlurper.parseText(creds.getSecret().getPlainText()));
     def token = credsJson["token"]
@@ -42,6 +46,9 @@ class Client {
 
   private doGet(String path) {
     def response = this.client().get("${this.baseUrl}${path}", this.token)
+
+    // NOTE: To make sure the result is serializable, we use the JsonSlurperClassic (we don't know if this is map or a list)
+    // - https://stackoverflow.com/questions/37864542/jenkins-pipeline-notserializableexception-groovy-json-internal-lazymap
     def jsonSlurper = new JsonSlurperClassic()
     def result = jsonSlurper.parseText(response);
     return result
