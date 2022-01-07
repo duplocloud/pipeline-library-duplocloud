@@ -26,7 +26,8 @@ class Client {
     assert creds: "Duplo credentials not found with id ${credentialsId}"
 
     // Parse the credentials.
-    def credsJson = readJSON text: creds.getSecret().getPlainText()
+    def jsonSlurper = new JsonSlurper()
+    def credsJson = jsonSlurper.parseText(creds.getSecret().getPlainText());
     def token = credsJson["token"]
     def baseUrl = credsJson["url"]
     assert token: "Credentials ${credentialsId}: token: missing JSON key"
