@@ -26,7 +26,7 @@ class Client {
     assert creds: "Duplo credentials not found with id ${credentialsId}"
 
     // Parse the credentials.
-    def credsJson = readJSON text: creds.getSecret().getPlainText()
+    def credsJson = readJSON(text: creds.getSecret().getPlainText())
     def token = credsJson["token"]
     def baseUrl = credsJson["url"]
     assert token: "Credentials ${credentialsId}: token: missing JSON key"
@@ -41,7 +41,7 @@ class Client {
 
   private doGet(String path) {
     def response = this.client().get("${this.baseUrl}${path}", this.token);
-    return readJSON text: response;
+    return readJSON(text: response);
   }
 
   public listTenants() {
