@@ -27,7 +27,7 @@ class Client {
 
     // Parse the credentials.
     def jsonSlurper = new JsonSlurper()
-    def credsJson = jsonSlurper.parseText(creds.getSecret().getPlainText());
+    def credsJson = new HashMap(jsonSlurper.parseText(creds.getSecret().getPlainText()));
     def token = credsJson["token"]
     def baseUrl = credsJson["url"]
     assert token: "Credentials ${credentialsId}: token: missing JSON key"
@@ -42,7 +42,8 @@ class Client {
 
   private doGet(String path) {
     def response = this.client().get("${this.baseUrl}${path}", this.token)
-    def result = readJSON text: response
+    def jsonSlurper = new JsonSlurper()
+    def result = new HashMap(jsonSlurper.parseText(response);
     return result
   }
 
