@@ -42,7 +42,7 @@ class Client {
 
   private doGet(String path) {
     def response = this.client().get("${this.baseUrl}${path}", this.token)
-    def jsonSlurper = new JsonSlurper()
+    def jsonSlurper = new JsonSlurperClassic()
     def result = jsonSlurper.parseText(response);
     return result
   }
