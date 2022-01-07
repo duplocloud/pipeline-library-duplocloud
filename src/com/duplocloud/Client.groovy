@@ -9,7 +9,6 @@ class Client {
   def restClient
 
   Client(String baseUrl, String token) {
-    this.restClient = new com.duplocloud.library.RestClient()
     this.baseUrl = baseUrl
     this.token = token
 
@@ -37,8 +36,12 @@ class Client {
     return new Client(baseUrl, token)
   }
 
+  private client() {
+    return new com.duplocloud.library.RestClient()
+  }
+
   private doGet(String path) {
-    def response = this.restClient.get("${this.baseUrl}${path}", this.token);
+    def response = this.client().get("${this.baseUrl}${path}", this.token);
     def jsonSlurper = new JsonSlurper()
     return jsonSlurper.parseText(response);
   }
