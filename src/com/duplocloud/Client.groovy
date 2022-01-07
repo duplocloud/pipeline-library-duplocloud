@@ -1,6 +1,6 @@
 package com.duplocloud;
 
-import com.duplocloud.library.*;
+import com.duplocloud.library.*
 import groovy.json.*
 
 class Client {
@@ -21,13 +21,12 @@ class Client {
   public static Client getInstance(String credentialsId = "duplo-token") {
 
     // Find the credentials.
-    def credsProvider = new com.duplocloud.library.Credentials();
+    def credsProvider = new com.duplocloud.library.Credentials()
     def creds = credsProvider.getCredential(credentialsId)
-    assert creds: "Duplo credentials not found with id ${credentialsId}";
+    assert creds: "Duplo credentials not found with id ${credentialsId}"
 
     // Parse the credentials.
-    def jsonSlurper = new JsonSlurper()
-    def credsJson = jsonSlurper.parseText(creds.getSecret().getPlainText());
+    def credsJson = readJSON text: creds.getSecret().getPlainText()
     def token = credsJson["token"]
     def baseUrl = credsJson["url"]
     assert token: "Credentials ${credentialsId}: token: missing JSON key"
@@ -42,8 +41,7 @@ class Client {
 
   private doGet(String path) {
     def response = this.client().get("${this.baseUrl}${path}", this.token);
-    def jsonSlurper = new JsonSlurper()
-    return jsonSlurper.parseText(response);
+    return readJSON text: response;
   }
 
   public listTenants() {
