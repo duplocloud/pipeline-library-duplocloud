@@ -65,4 +65,12 @@ class Client {
   public getTenantByName(String name) {
     return this.listTenants().find { t -> t.AccountName == name }
   }
+
+  public listServices(String tenantId) {
+    return this.doGet("subscriptions/${tenantId}/GetReplicationControllers")
+  }
+
+  public getService(String tenantId, String name) {
+    return this.listServices(tenantId).find { t -> t.Name == name }
+  }
 }
