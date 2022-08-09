@@ -44,24 +44,26 @@ class Client {
     return new com.duplocloud.library.RestClient()
   }
 
-  private doGet(String path) {
-    def response = this.client().get("${this.baseUrl}${path}", this.token)
+  private parseResponse(String body) {
+    if (body == "null" || body == "") {
+      return null
+    }
 
     // NOTE: To make sure the result is serializable, we use the JsonSlurperClassic (we don't know if this is map or a list)
     // - https://stackoverflow.com/questions/37864542/jenkins-pipeline-notserializableexception-groovy-json-internal-lazymap
     def jsonSlurper = new JsonSlurperClassic()
-    def result = jsonSlurper.parseText(response);
+    def result = jsonSlurper.parseText(body);
     return result
+  }
+
+  private doGet(String path) {
+    def response = this.client().get("${this.baseUrl}${path}", this.token)
+    return parseResponse(response)
   }
 
   private doPost(String path, String body) {
     def response = this.client().post("${this.baseUrl}${path}", this.token, body)
-
-    // NOTE: To make sure the result is serializable, we use the JsonSlurperClassic (we don't know if this is map or a list)
-    // - https://stackoverflow.com/questions/37864542/jenkins-pipeline-notserializableexception-groovy-json-internal-lazymap
-    def jsonSlurper = new JsonSlurperClassic()
-    def result = jsonSlurper.parseText(response);
-    return result
+    return parseResponse(response)
   }
 
   public listTenants() {
