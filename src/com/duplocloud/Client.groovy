@@ -54,6 +54,16 @@ class Client {
     return result
   }
 
+  private doPost(String path, String body) {
+    def response = this.client().post("${this.baseUrl}${path}", this.token, body)
+
+    // NOTE: To make sure the result is serializable, we use the JsonSlurperClassic (we don't know if this is map or a list)
+    // - https://stackoverflow.com/questions/37864542/jenkins-pipeline-notserializableexception-groovy-json-internal-lazymap
+    def jsonSlurper = new JsonSlurperClassic()
+    def result = jsonSlurper.parseText(response);
+    return result
+  }
+
   public listTenants() {
     return this.doGet("admin/GetTenantsForUser")
   }
@@ -72,5 +82,9 @@ class Client {
 
   public getService(String tenantId, String name) {
     return this.listServices(tenantId).find { t -> t.Name == name }
+  }
+
+  public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
+    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
   }
 }
