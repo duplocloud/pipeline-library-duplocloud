@@ -87,15 +87,15 @@ class Client {
   }
 
   public restartService(String tenantId, String name) {
-    return this.doPost("subscriptions/${tenantId}/ReplicationControllerReboot", '{}')
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerReboot/${name}", '{}')
   }
 
   public startService(String tenantId, String name) {
-    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStart", '{}')
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStart/${name}", '{}')
   }
 
   public stopService(String tenantId, String name) {
-    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStop", '{}')
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStop/${name}", '{}')
   }
 
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
