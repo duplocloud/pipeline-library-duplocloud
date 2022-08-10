@@ -86,6 +86,18 @@ class Client {
     return this.listServices(tenantId).find { t -> t.Name == name }
   }
 
+  public restartService(String tenantId, String name) {
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerReboot", '{}')
+  }
+
+  public startService(String tenantId, String name) {
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStart", '{}')
+  }
+
+  public stopService(String tenantId, String name) {
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerStop", '{}')
+  }
+
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
     return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
   }
