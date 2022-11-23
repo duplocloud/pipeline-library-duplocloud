@@ -11,10 +11,10 @@ class Credentials {
   public Credentials getCredential(String id) {
     def jenkinsCredentials = CredentialsProvider.lookupCredentials(
         Credentials.class,
-        Jenkins.instance /*,
+        Jenkins.instance,
         null,
-        null */
-    );
+        null
+    )
 
     for (creds in jenkinsCredentials) {
         println(c.id + ": " + c.description)
