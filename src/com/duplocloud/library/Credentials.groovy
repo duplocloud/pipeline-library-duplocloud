@@ -16,7 +16,7 @@ class Credentials {
     )
 
     for (creds in jenkinsCredentials) {
-        println(c.id + ": " + c.description)
+        println(creds.id + ": " + creds.description)
         if(creds.id == id){
             return creds
         }
