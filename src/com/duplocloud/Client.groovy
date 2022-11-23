@@ -23,7 +23,7 @@ class Client {
     // Find the credentials.
     def credsProvider = new com.duplocloud.library.Credentials()
     def creds = credsProvider.getCredential(credentialsId)
-    assert creds: "Duplo credentials not found with id ${credentialsId}"
+    assert creds: "Duplo credentials not found with id $credentialsId"
 
     // Parse the credentials.
     //
