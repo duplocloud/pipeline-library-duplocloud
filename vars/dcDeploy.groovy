@@ -65,7 +65,7 @@ def call(ServiceUpdateInput input) {
     assert duploToken: "Duplo token not found in secret and even not passed by the caller"
     assert duploUrl: "Duplo url not found in secret and even not passed by the caller"
 
-    def body =input.service.toBody();
+    def body = input.service.toBody();
 
     // Fecthing tenant id from the tenant name
     def sTenants = flow.get("${duploUrl}/admin/GetTenantsForUser", duploToken);
