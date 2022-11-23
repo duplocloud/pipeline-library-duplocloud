@@ -47,15 +47,13 @@ def call(ServiceUpdateInput input) {
     assert input.service.image : "Param 'service.image' should be defined."
 
 
-    creds = credentials('duplo-token')
-    
     def duploToken = input.token;
     def duploURL = input.duploUrl;
 
     def flow = new com.duplocloud.library.RestClient()
     def credsProvider = new com.duplocloud.library.Credentials();
     if(!duploToken){
-          def secretId = input.tokenId || "duplo-token"
+          def secretId = input.tokenId ?: "duplo-token"
           def token = credsProvider.getCredential(secretId)
           assert token: "Duplo token Secret not found with id ${secretId}";
 
@@ -67,7 +65,7 @@ def call(ServiceUpdateInput input) {
     assert duploToken: "Duplo token not found in secret and even not passed by the caller"
     assert duploUrl: "Duplo url not found in secret and even not passed by the caller"
 
-    def body =input.service.toBody();
+    def body = input.service.toBody();
 
     // Fecthing tenant id from the tenant name
     def sTenants = flow.get("${duploUrl}/admin/GetTenantsForUser", duploToken);
