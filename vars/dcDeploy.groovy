@@ -47,15 +47,13 @@ def call(ServiceUpdateInput input) {
     assert input.service.image : "Param 'service.image' should be defined."
 
 
-    creds = credentials('duplo-token')
-    
     def duploToken = input.token;
     def duploURL = input.duploUrl;
 
     def flow = new com.duplocloud.library.RestClient()
     def credsProvider = new com.duplocloud.library.Credentials();
     if(!duploToken){
-          def secretId = input.tokenId || "duplo-token"
+          def secretId = input.tokenId ?: "duplo-token"
           def token = credsProvider.getCredential(secretId)
           assert token: "Duplo token Secret not found with id ${secretId}";
 
