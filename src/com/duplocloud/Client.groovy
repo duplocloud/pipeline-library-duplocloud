@@ -98,6 +98,10 @@ class Client {
     return this.doPost("subscriptions/${tenantId}/ReplicationControllerStop/${name}", '{}')
   }
 
+  public patchService(String tenantId,  Map<String,String> data) {
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerChange", JsonOutput.toJson(data))
+  }
+  
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
     return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
   }
