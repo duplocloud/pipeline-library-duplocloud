@@ -103,7 +103,7 @@ class Client {
             [Name: serviceName, Image: image]
         }
         String jsonPayload = JsonOutput.toJson(servicesList)
-    return this.doPost("subscriptions/${tenantId}/ReplicationControllerChange", JsonOutput.toJson(jsonPayload))
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerBulkChangeAll", JsonOutput.toJson(jsonPayload))
   }
   
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
