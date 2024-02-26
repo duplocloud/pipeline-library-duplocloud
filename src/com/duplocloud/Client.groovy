@@ -102,7 +102,7 @@ class Client {
         List<Map<String, String>> servicesList = data.collect { serviceName, image ->
             [Name: serviceName, Image: image]
         }
-        String jsonPayload = JsonOutput.toJson(servicesList)
+        def jsonPayload = JsonOutput.toJson(servicesList)
     return this.doPost("subscriptions/${tenantId}/ReplicationControllerChange", JsonOutput.toJson(data))
   }
   
