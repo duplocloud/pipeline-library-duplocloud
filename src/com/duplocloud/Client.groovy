@@ -102,8 +102,7 @@ class Client {
         List<Map<String, String>> servicesList = data.collect { serviceName, image ->
             [Name: serviceName, Image: image]
         }
-        String jsonPayload = JsonOutput.toJson(servicesList)
-    return this.doPost("subscriptions/${tenantId}/ReplicationControllerBulkChangeAll", JsonOutput.toJson(jsonPayload))
+    return this.doPost("subscriptions/${tenantId}/ReplicationControllerBulkChangeAll", JsonOutput.toJson(servicesList))
   }
   
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
