@@ -99,6 +99,10 @@ class Client {
   }
 
   public patchService(String tenantId,  Map<String,String> data) {
+        List<Map<String, String>> servicesList = data.collect { serviceName, image ->
+            [Name: serviceName, Image: image]
+        }
+        String jsonPayload = JsonOutput.toJson(servicesList)
     return this.doPost("subscriptions/${tenantId}/ReplicationControllerChange", JsonOutput.toJson(data))
   }
   
