@@ -105,8 +105,28 @@ class Client {
     return this.doPost("subscriptions/${tenantId}/ReplicationControllerBulkChangeAll", JsonOutput.toJson(servicesList))
   }
   
+
+  public listSecrets(String tenantId) {
+    return this.doGet("/v3/subscriptions/${tenantId}/k8s/secret")
+  }
+
+  public listConfigmaps(String tenantId) {
+    return this.doGet("/v3/subscriptions/${tenantId}/k8s/configmap")
+  }
+
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
-    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
+        Map<String, Object> payload = [
+            name: name,
+            data: data
+    ]
+    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(payload))
+  }
+
+  public createOrUpdateK8sSecret(String tenantId, String name, Map<String,String> data) {
+        Map<String, Object> payload = [
+            SecretName: name,
+            SecretData: data
+    ]
+    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8Secret", JsonOutput.toJson(payload))
   }
 }
- 
