@@ -119,7 +119,7 @@ class Client {
             name: name,
             data: data
     ]
-    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
+    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(payload))
   }
 
   public createOrUpdateK8sSecret(String tenantId, String name, Map<String,String> data) {
