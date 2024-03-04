@@ -115,11 +115,7 @@ class Client {
   }
 
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
-        Map<String, Object> payload = [
-            name: name,
-            data: data
-    ]
-    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(payload))
+    return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8ConfigMap", JsonOutput.toJson(data))
   }
 
   public createOrUpdateK8sSecret(String tenantId, String name, Map<String,String> data) {
@@ -130,3 +126,5 @@ class Client {
     return this.doPost("subscriptions/${tenantId}/CreateOrUpdateK8Secret", JsonOutput.toJson(payload))
   }
 }
+
+
