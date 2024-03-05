@@ -107,11 +107,11 @@ class Client {
   
 
   public listSecrets(String tenantId) {
-    return this.doGet("/v3/subscriptions/${tenantId}/k8s/secret")
+    return this.doGet("v3/subscriptions/${tenantId}/k8s/secret")
   }
 
   public listConfigmaps(String tenantId) {
-    return this.doGet("/v3/subscriptions/${tenantId}/k8s/configmap")
+    return this.doGet("v3/subscriptions/${tenantId}/k8s/configmap")
   }
 
   public createOrUpdateK8sConfigMap(String tenantId, String name, Map<String,String> data) {
