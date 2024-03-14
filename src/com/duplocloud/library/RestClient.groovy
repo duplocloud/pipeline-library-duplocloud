@@ -21,7 +21,7 @@ def post(String url, String token, Object body) {
     res = stream?.text;
     connection.disconnect()
     echo "HTTP Status: ${connection.responseCode}"
-    echo "Recieved Resonse:  ${res}"
+    echo "Received Response:  ${res}"
     return res
 
   } catch (err) {
