@@ -13,7 +13,7 @@ def post(String url, String token, Object body) {
     connection.setRequestMethod("POST")
     connection.setDoOutput(true)
     connection.connect()
-    echo "Request body: ${body}\n"
+    // echo "Request body: ${body}\n"
     OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())
     writer.write(body);
     writer.flush();
